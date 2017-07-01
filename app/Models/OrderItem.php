@@ -19,6 +19,6 @@ class OrderItem extends Model implements Transformable
 
     public function product()
     {
-    	return $this->belongsTo(Products::class);
+    	return $this->belongsTo(Product::class);
     }
 }

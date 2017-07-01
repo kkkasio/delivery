@@ -1,43 +1,50 @@
 @extends('app')
 @section('content')
 	<div class="container">
-		<h3>Clientes</h3>
-			<a href="{{ route('admin.clients.create')}}" class="btn btn-primary">Novo Cliente</a>
+		<h3>Pedidos</h3>
 		<br><br>
-
 		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Nome</th>
-					<th>Telefone</th>
-					<th>Endereço</th>
-					<th>Cidade</th>
-					<th>Estado</th>
-					<th>CEP</th>
-
+					<th>Total</th>
+					<th>Data</th>
+					<th>Itens</th>
+					<th>Entregador</th>
+					<th>Status</th>
 					<th>Ação</th>
 				</tr>
 			</thead>
 			<tbody>
-			@foreach($clients as $client)
+			@foreach($orders as $order)
 	
 				<tr>
-					<td>{{$client->id}}</td>
-					<td>{{$client->user->name}}</td>
-					<td>{{$client->phone}}</td>
-					<td>{{$client->address}}</td>
-					<td>{{$client->city}}</td>
-					<td>{{$client->state}}</td>
-					<td>{{$client->zipcode}}</td>
-
-					<td><a href="{{route('admin.clients.edit', ['id'=>$client->id])}}" class="btn btn-warning btn-sm">Editar</a>|#|
-						<a href="#" class="btn btn-danger btn-sm">Excluir</a></td>
+					<td>{{$order->id}}</td>
+					<td>{{$order->total}}</td>
+					<td>{{$order->created_at}}</td>
+					<td>
+						<ul>
+						@foreach($order->items as $item)
+							<li>{{$item->product->name}}</li>
+						@endforeach
+						</ul>
+					</td>
+					<td>
+						@if($order->deliveryman)
+							{{$order->deliveryman->name}}
+						@else
+							Sem Nome
+						@endif
+					</td>
+					<td>
+						{{ ($order->status == 0) ? 'Pendente' : ($order->status == 1) ? 'A Caminho' : ($order->status == 2) ? 'Entregue' : 'Cancelado' }}
+					</td>
+					<td><a href="{{route('admin.orders.edit',['id'=>$order->id])}}" class="btn btn-warning btn-sm">Editar</a></td>
 				</tr>
 			@endforeach
 			</tbody>
 
 		</table>
-		{!! $clients->render() !!}
+		{!! $orders->render() !!}
 	</div>
 @endsection
