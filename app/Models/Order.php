@@ -18,7 +18,7 @@ class Order extends Model implements Transformable
     }
 
     public function deliveryman()
-    {
+    {   // referência das chaves que vão ser relacionadas
     	return $this->belongsTo(User::class, 'user_deliveryman_id','id');
     }
 

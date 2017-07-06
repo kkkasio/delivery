@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
 	<div class="container">
-		<h2>Editando Pedido #{{$order->id}} - Total R$ {{$order->total}}</h2>
+		<h2>Editar Pedido #{{$order->id}} - Total R$ {{$order->total}}</h2>
         <h3>Cliente: {{$order->client->user->name}}</h3>
         <h4>Criada em: {{$order->created_at}}</h4>
 

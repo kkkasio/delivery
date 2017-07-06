@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
 	<div class="container">
-		<h3>Editando Cliente: {{$client->user->name}}</h3>
+		<h3>Editar Cliente: {{$client->user->name}}</h3>
 
         @include('errors._check')
 

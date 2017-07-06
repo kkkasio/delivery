@@ -37,14 +37,8 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth.checkrole', 'as' =>'admin
 
     //pedidos ou orders
     Route::get('orders',['as'=> 'orders.index', 'uses' => 'OrdersController@index']);
-    //Route::get('orders/create', ['as'=>'orders.create','uses'=>'OrdersController@create']);
     Route::get('orders/edit/{id}', ['as'=>'orders.edit', 'uses'=>'OrdersController@edit']);
     Route::post('orders/update/{id}', ['as'=>'orders.update', 'uses'=>'OrdersController@update']);
-    //Route::post('orders/store', ['as'=>'orders.store', 'uses'=>'OrdersController@store']);
-    //Route::get('orders/delete/{id}', ['as'=>'orders.destroy', 'uses'=>'OrdersController@destroy']);
-
-
-    Route::get('orders/teste', 'OrdersController@teste');
 
 });
 
