@@ -22,14 +22,14 @@
                     <tbody>
                     <tr>
                         <td>
-                            <select name="items[0][product[id]" class="form-control">
+                            <select name="items[0][product_id]" class="form-control">
                                 @foreach($products as $p)
                                     <option value="{{$p->id}}" data-price="{{$p->price}}">{{$p->name}} --- {{$p->price}}</option>
                                 @endforeach
                             </select>
                         </td>
                         <td>
-                            {!! Form::text('items[0]qtd', 1, ['class'=>'form-control']) !!}
+                            {!! Form::text('items[0][qtd]', 1, ['class'=>'form-control']) !!}
                         </td>
                     </tr>
                     </tbody>

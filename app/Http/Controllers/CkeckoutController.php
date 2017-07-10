@@ -27,14 +27,14 @@ class CkeckoutController extends Controller
     /**
      * @var OrderService
      */
-    private $service;
+    private $orderService;
 
-    public function __construct(OrderRepository $repository, UserRepository  $userRepository,ProductRepository $productRepository, OrderService $service)
+    public function __construct(OrderRepository $repository, UserRepository  $userRepository,ProductRepository $productRepository, OrderService $orderService)
     {
         $this->repository = $repository;
         $this->userRepository = $userRepository;
         $this->productRepository = $productRepository;
-        $this->service = $service;
+        $this->orderService = $orderService;
     }
 
     public function index()
@@ -42,7 +42,7 @@ class CkeckoutController extends Controller
         $clientId = $this->userRepository->find(Auth::user()->id)->client->id;
         $orders = $this->repository->scopeQuery(function ($query) use ($clientId)
         {
-            return $query->where('client_id', '=',$clientId);
+            return $query->where('client_id','=',$clientId);
         })->paginate();
 
         return view ('customer.order.index', compact('orders'));
@@ -58,12 +58,10 @@ class CkeckoutController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $client_id = $this->userRepository->find(Auth::user()->id)->client->id;
-
-        $data['client_id'] = $client_id;
-        $this->service->create($data);
+        $clientId = $this->userRepository->find(Auth::user()->id)->client->id;
+        $data['client_id'] = $clientId;
+        $this->orderService->create($data);
 
         return redirect()->route('customer.order.index');
-
     }
 }

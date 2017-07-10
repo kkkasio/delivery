@@ -11,6 +11,11 @@
 |
 */
 
+
+Route::get('/home', function (){
+    return view ('welcome');
+});
+
 Route::group(['prefix'=> 'admin','middleware' => 'auth.checkrole', 'as' =>'admin.'], function (){
     // CATEGORIAS
     Route::get('categories',['as'=> 'categories.index', 'uses' => 'CategoriesController@index']);
@@ -47,8 +52,7 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth.checkrole', 'as' =>'admin
     Route::post('cupoms/store', ['as'=>'cupoms.store', 'uses'=>'CupomsController@store']);
 });
 
-Route::group(['prefix'=>'costumer', 'as' => 'customer.'], function(){
-
+Route::group(['prefix'=>'costumer', 'middleware' => 'auth.checkrole:client', 'as' => 'customer.'], function(){
     //checkout
     Route::get('order' , ['as' => 'order.index', 'uses' => 'CkeckoutController@index']);
     Route::get('order/create' , ['as' => 'order.create', 'uses' => 'CkeckoutController@create']);

@@ -37,7 +37,7 @@
 						@endif
 					</td>
 					<td>
-						{{ ($order->status == 0) ? 'Pendente' : ($order->status == 1) ? 'A Caminho' : ($order->status == 2) ? 'Entregue' : 'Cancelado' }}
+						{{ $order->status }}
 					</td>
 					<td><a href="{{route('admin.orders.edit',['id'=>$order->id])}}" class="btn btn-warning btn-sm">Editar</a></td>
 				</tr>
