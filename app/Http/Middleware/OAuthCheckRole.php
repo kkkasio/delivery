@@ -3,10 +3,23 @@
 namespace CodeDelivery\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use CodeDelivery\Repositories\UserRepository;
+use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
-class CheckRole
+
+class OAuthCheckRole
 {
+
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -16,17 +29,13 @@ class CheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        if(!Auth::check())
-        {
-           return redirect('/auth/login');
-        }
+        $id = Authorizer::getResourceOwnerId();
+        $user = $this->userRepository->find($id);
 
-        if(Auth::user()->role <> $role)
+        if($user->role != $role)
         {
-            return redirect('/auth/login');
+            abort(403,'Acess Forbiden');
         }
-
         return $next($request);
-
     }
 }

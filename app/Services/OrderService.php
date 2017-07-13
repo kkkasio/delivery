@@ -1,17 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kásio
- * Date: 29/06/2017
- * Time: 09:35
- */
 
 namespace CodeDelivery\Services;
 
 use CodeDelivery\Repositories\CupomRepository;
 use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\ProductRepository;
-
 use Illuminate\Support\Facades\DB;
 
 class OrderService
@@ -75,7 +68,7 @@ class OrderService
 
             $order->save();
             \DB::commit();
-
+            return $order;
         }
         catch (\Exception $e)
         {
