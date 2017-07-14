@@ -9,6 +9,7 @@ use CodeDelivery\Services\OrderService;
 use Illuminate\Http\Request;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
+
 class ClientCheckoutController extends Controller
 {
     /**
@@ -35,16 +36,15 @@ class ClientCheckoutController extends Controller
     {
         $id = Authorizer::getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
-        $orders = $this->repository->with('items')->scopeQuery(function ($query) use ($clientId)
-        {
-            return $query->where('client_id','=',$clientId);
+        $orders = $this->repository->with(['items'])->scopeQuery(function ($query) use($clientId){
+            return $query->where('client_id', '=', $clientId);
         })->paginate();
         return $orders;
     }
-    public function store(Request $request)
+    public function store(CheckoutRequest $request)
     {
         $data = $request->all();
-        $id = Authorizer::getRessourceOwnerId();
+        $id = Authorizer::getResourceOwnerId();
         $clientId = $this->userRepository->find($id)->client->id;
         $data['client_id'] = $clientId;
         $orderObj = $this->orderService->create($data);
@@ -54,7 +54,7 @@ class ClientCheckoutController extends Controller
 
     public function show($id)
     {
-        $order = $this->repository->with(['clients', 'items'])->find($id);
+        $order = $this->repository->with(['client', 'items', 'cupom'])->find($id);
         $order->items->each(function ($item){
             $item->product;
         });

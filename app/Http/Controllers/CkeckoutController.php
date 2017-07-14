@@ -51,7 +51,6 @@ class CkeckoutController extends Controller
     public function create()
     {
         $products = $this->productRepository->listar();
-
         return view('customer.order.create',compact('products'));
     }
 
