@@ -37,6 +37,9 @@ class OrderService
         \DB::beginTransaction();
         try{
             $data['status'] = 0;
+            if(isset($data['cupom_id'])){
+                unset($data['cupom_id']);
+            }
             if(isset($data['cupom_code']))
             {
                 $cupom = $this->cupomRepository->findByField('code', $data['cupom_code'])->first();
@@ -56,7 +59,6 @@ class OrderService
             {
                 $item['price'] = $this->productRepository->find($item['product_id'])->price;
                 $order->items()->create($item);
-
                 $total += $item['price'] * $item['qtd'];
             }
 
@@ -74,7 +76,7 @@ class OrderService
         catch (\Exception $e)
         {
             \DB::rollback();
-            throw  $e;
+            throw $e;
         }
     }
 

@@ -45,15 +45,14 @@ Route::group(['prefix'=> 'admin','middleware' => 'auth.checkrole:admin', 'as' =>
     Route::get('orders/edit/{id}', ['as'=>'orders.edit', 'uses'=>'OrdersController@edit']);
     Route::post('orders/update/{id}', ['as'=>'orders.update', 'uses'=>'OrdersController@update']);
 
-
-    //pedidos ou orders
+    //cupons 
     Route::get('cupoms',['as'=> 'cupoms.index', 'uses' => 'CupomsController@index']);
     Route::get('cupoms/create', ['as'=>'cupoms.create', 'uses'=>'CupomsController@create']);
     Route::post('cupoms/store', ['as'=>'cupoms.store', 'uses'=>'CupomsController@store']);
 });
 
 Route::group(['prefix'=>'costumer', 'middleware' => 'auth.checkrole:client', 'as' => 'customer.'], function(){
-    //checkout
+    //checkout do cliente criar e listar pedidos
     Route::get('order' , ['as' => 'order.index', 'uses' => 'CkeckoutController@index']);
     Route::get('order/create' , ['as' => 'order.create', 'uses' => 'CkeckoutController@create']);
     Route::post('order/store' , ['as' => 'order.store', 'uses' => 'CkeckoutController@store']);
@@ -61,9 +60,8 @@ Route::group(['prefix'=>'costumer', 'middleware' => 'auth.checkrole:client', 'as
 });
 
 Route::post('oauth/access_token', function() {
-    return Response::json(Authorizer::issueAccessToken());
+   return Response::json(Authorizer::issueAccessToken());
 });
-
 
 Route::group(['prefix' => 'api', 'middleware'=> 'oauth', 'as'=> 'api'], function () {
 
@@ -83,7 +81,4 @@ Route::group(['prefix' => 'api', 'middleware'=> 'oauth', 'as'=> 'api'], function
             'uses' => 'Api\Deliveryman\DeliverymanCheckoutController@updateStatus',
             'as'   => 'orders.update_status']);
     });
-
 });
-
-

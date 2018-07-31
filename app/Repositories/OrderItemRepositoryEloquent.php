@@ -6,7 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use CodeDelivery\Repositories\OrderItemRepository;
 use CodeDelivery\Models\OrderItem;
-use CodeDelivery\Validators\OrderItemValidator;
+//use CodeDelivery\Validators\OrderItemValidator;
 
 /**
  * Class OrderItemRepositoryEloquent
@@ -23,8 +23,6 @@ class OrderItemRepositoryEloquent extends BaseRepository implements OrderItemRep
     {
         return OrderItem::class;
     }
-
-    
 
     /**
      * Boot up the repository, pushing criteria

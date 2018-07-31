@@ -7,7 +7,6 @@ use CodeDelivery\Repositories\OrderRepository;
 use CodeDelivery\Repositories\UserRepository;
 use CodeDelivery\Services\OrderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
 class DeliverymanCheckoutController extends Controller
@@ -20,7 +19,6 @@ class DeliverymanCheckoutController extends Controller
      * @var UserRepository
      */
     private $userRepository;
-
     /**
      * @var OrderService
      */
@@ -56,6 +54,5 @@ class DeliverymanCheckoutController extends Controller
             return $order;
         }
         abort('400',"Pedido não Encontrado");
-
     }
 }

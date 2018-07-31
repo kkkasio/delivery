@@ -10,7 +10,15 @@ class Order extends Model implements Transformable
 {
     use TransformableTrait;
 
-    protected $fillable = ['user_id','user_deliveryman_id','total','status'];
+    protected $fillable = ['user_id','user_deliveryman_id','total','status','cupom_id'];
+
+    public function transform()
+    {
+        return [
+            'order' => $this->id,
+            'order_items' => $this->items
+        ];
+    }
 
     public function items()
     {

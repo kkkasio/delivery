@@ -29,12 +29,12 @@ class OAuthCheckRole
      */
     public function handle($request, Closure $next, $role)
     {
-        $id = Authorizer::getResourceOwnerId();
+        $id = Authorizer::getResourceOwnerId(); // propietário do acesso! (usuário autenticado)
         $user = $this->userRepository->find($id);
 
         if($user->role != $role)
         {
-            abort(403,'Acess Forbiden');
+            abort(403,'Acesso Proibido');
         }
         return $next($request);
     }
