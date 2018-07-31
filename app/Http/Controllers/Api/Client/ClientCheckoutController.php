@@ -39,7 +39,7 @@ class ClientCheckoutController extends Controller
         $clientId = $this->userRepository->find($id)->client->id;
 
         $orders = $this->repository
-                ->with('items')
+                ->with($this->with)
                 ->scopeQuery(function ($query) use ($clientId){
                     return $query->where('client_id', '=', $clientId);
                 })->paginate();
@@ -51,18 +51,20 @@ class ClientCheckoutController extends Controller
         $clientId = $this->userRepository->find($id)->client->id;
         $data['client_id'] = $clientId;
         $orderObj = $this->orderService->create($data);
+
         return $this->repository
+                ->skipPresenter(false)
                 ->with($this->with)
                 ->find($orderObj->id);
 
     }
 
     public function show($id){
-        $a = $this->repository->skipPresenter(true)->with($this->with)->find($id);
+        $dados = $this->repository->skipPresenter(true)->with($this->with)->find($id);
         $id = Authorizer::getResourceOwnerId();
        // dd($a['client_id']);
 
-        if($a['client_id'] == $id)
+        if($dados['client_id'] == $id)
         {
             return $this->repository
                 ->skipPresenter(false)
